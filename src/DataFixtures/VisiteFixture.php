@@ -21,7 +21,7 @@ class VisiteFixture extends Fixture
                     ->setDatecreation($faker->dateTimeBetween("-10 years", 'now'))
                     ->setTempmin($faker->numberBetween(-20,10))
                     ->setTempmax($faker->numberBetween(10, 40))
-                    ->setNote($faker->numberBetween(0, 20))
+                    ->setnote($faker->numberBetween(0, 20))
                     ->setAvis($faker->sentence(4, true));
             $manager->persist($visite);
         }
