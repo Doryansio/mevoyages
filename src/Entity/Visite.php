@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\VisiteRepository;
+use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -52,6 +55,16 @@ class Visite
      */
     private $tempmax;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Environnement::class, inversedBy="visites")
+     */
+    private $Environnements;
+
+    public function __construct()
+    {
+        $this->Environnements = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -80,6 +93,18 @@ class Visite
 
         return $this;
     }
+    public function getDateCreation(): ?DateTimeInterface
+    {
+        return $this->datecreation;
+    }
+    
+    public function setDatecreation(?DateTimeInterface $datecreation): self
+    {
+        $this->datecreation = $datecreation;
+
+        return $this;
+    }
+
 
     public function getDatecreationString(): string
     {
@@ -92,12 +117,6 @@ class Visite
         }
     }
     
-    public function setDatecreation(?\DateTimeInterface $datecreation): self
-    {
-        $this->datecreation = $datecreation;
-
-        return $this;
-    }
 
     public function getNote(): ?int
     {
@@ -143,6 +162,30 @@ class Visite
     public function setTempmax(?int $tempmax): self
     {
         $this->tempmax = $tempmax;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Environnement>
+     */
+    public function getEnvironnements(): Collection
+    {
+        return $this->Environnements;
+    }
+
+    public function addEnvironnement(Environnement $environnement): self
+    {
+        if (!$this->Environnements->contains($environnement)) {
+            $this->Environnements[] = $environnement;
+        }
+
+        return $this;
+    }
+
+    public function removeEnvironnement(Environnement $environnement): self
+    {
+        $this->Environnements->removeElement($environnement);
 
         return $this;
     }
