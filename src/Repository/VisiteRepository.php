@@ -74,6 +74,19 @@ class VisiteRepository extends ServiceEntityRepository
                     ->getResult();
         }
     }
+    /**
+     * Enregistrement des deux dernieres valeurs
+     * @param type $champ
+     * @param type $ordre
+     * @return Visite[]
+     */
+    public function findByLastUp($nb): array{
+        return $this->createQueryBuilder('v')
+                ->orderBy('v.datecreation', 'DESC')
+                ->setMaxResults($nb)
+                ->getQuery()
+                ->getResult();
+    }
 //    /**
 //     * @return Visite[] Returns an array of Visite objects
 //     */

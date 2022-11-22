@@ -44,6 +44,7 @@ class Visite
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Range(min=0, max=20)
      */
     private $note;
 
@@ -59,6 +60,7 @@ class Visite
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\GreaterThan(propertyPath="tempmin")
      */
     private $tempmax;
 
@@ -227,7 +229,7 @@ class Visite
     public function setImageFile(?File $imageFile): self {
         $this->imageFile = $imageFile;
         if ($this -> imageFile instanceof UploadedFile) {
-            $this ->updated_at = new DateTime('now');
+            $this ->updated_at = new \DateTime('now');
         }
         return $this;
     }
@@ -254,9 +256,6 @@ class Visite
      */
     public function validate(ExecutionContextInterface $context)
     {
-        $context->buildViolation("message d'erreur")
-                ->atPath('nom_champ')
-                ->addViolation();
         $image = $this->getImageFile();
         if($image != null && $image != ""){
             $tailleImage = @getimagesize($image);
