@@ -38,7 +38,7 @@ class VoyagesControllerTest extends WebTestCase{
         $client->clickLink('Blondelboeuf');
         //recuperation du resultat du clic
         $response = $client->getResponse();
-        dd($client->getRequest());
+        
         //controle si le lien existe
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
         // recuperation de la route et controle qu'elle est correcte
